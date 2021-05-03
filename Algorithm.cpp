@@ -4,6 +4,11 @@ Algorithm::Algorithm()
 {
 }
 
-void Algorithm::randomiseWeightings()
+void Algorithm::setInputs(float inputs[18])
 {
+}
+
+bool Algorithm::playGame(Algorithm a)
+{
+	return false;
 }

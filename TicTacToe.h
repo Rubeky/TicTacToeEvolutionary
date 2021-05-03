@@ -6,16 +6,14 @@ using namespace std;
 class TicTacToe
 {
 private:
-	vector<Algorithm> Algorithm;
+	vector<Algorithm*> algorithms;
 public:
 	TicTacToe();
-	//Initial randomisation for the Algorithms
-	void randomiseWeightings();
 	//All Algorithms compete against each other to see who wins
 	int competeAll();
 	//Updates Algorithms based on which one is best
 	void updateBest(int best);
-	//Saves best Algorithm to a 
+	//Saves best Algorithm to a csv
 	void saveAlgorithm();
 };
 

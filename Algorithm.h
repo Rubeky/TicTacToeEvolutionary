@@ -5,10 +5,13 @@
 class Algorithm
 {
 private:
-	vector<vector<Neuron>> neurons;
+	float inputs[18] = { 0 };
+	Neuron hiddenNeurons[2][18];
+	Neuron outputs[9];
 
 public:
 	Algorithm();
-	void randomiseWeightings();
+	void setInputs(float inputs[18]);
+	bool playGame(Algorithm a);
 };
 
