@@ -12,8 +12,9 @@ struct board {
 	// 0 - No win is present
 	// 1 - noughts won
 	// 2 - crosses won
+	// 3 - tie
 	int isFinished() {
-		return std::max(isDiag(), isStraight());
+		return std::max(isDiag(), isStraight(), isAllFilled());
 	}
 
 	//Checking if a diagonal win is present
@@ -48,5 +49,15 @@ struct board {
 				if (!whoPlayed[0 + i] && !whoPlayed[3 + i] && !whoPlayed[6 + i]) return 1;
 			}
 		}
+	}
+
+	//Checks if game is over due to a tie
+	int isAllFilled() {
+		int howManyFilled = 0;
+		for (int i = 0; i < 9; i++) {
+			if (isPlayed[i]) howManyFilled++;
+		}
+
+		return howManyFilled == 9;
 	}
 };
