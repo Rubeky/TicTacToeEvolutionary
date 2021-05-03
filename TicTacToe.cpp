@@ -2,10 +2,14 @@
 #include <vector>
 using namespace std;
 
+//Holds all neural networks, manipulates them as needed
 TicTacToe::TicTacToe()
 {
-	Algorithm* algorithm = new Algorithm();
-	for(int i = 0; i < 10; i++) this->algorithms.push_back(algorithm);
+	//Initialising
+	for (int i = 0; i < 10; i++) {
+		Algorithm* algorithm = new Algorithm();
+		this->algorithms.push_back(algorithm);
+	}
 }
 
 int TicTacToe::competeAll()
