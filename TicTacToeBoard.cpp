@@ -2,11 +2,13 @@
 
 struct board {
 	//0 is O, 1 is X
-	bool whoPlayed[9];
+private:
+	bool whoPlayed[9] = { 0 };
 
 	//1 is played
-	bool isPlayed[9];
+	bool isPlayed[9] = { 0 };
 
+public:
 	//Checks if game is won
 	//returns:
 	// 0 - No win is present
@@ -59,5 +61,15 @@ struct board {
 		}
 
 		return howManyFilled == 9;
+	}
+
+	//Fills in a move if it hasn't already been played
+	//place: 0-8, place in board that wants to be filled
+	//player: 0 is O, 1 is X
+	bool makeMove(int place, bool player) {
+		if (!isPlayed[place]) {
+			isPlayed[place] = true;
+			whoPlayed[place] = player;
+		}
 	}
 };
