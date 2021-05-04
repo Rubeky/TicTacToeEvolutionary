@@ -11,7 +11,9 @@ private:
 
 public:
 	Algorithm();
-	void setInputs(float inputs[18]);
-	bool playGame(Algorithm a);
+	void setInputs(Board board);
+	void solveOutput();
+	int makeBestMove(int i);
+	bool playGame(Algorithm a, Board board);
 };
 

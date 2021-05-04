@@ -1,6 +1,6 @@
 #include <utility>
 
-struct board {
+struct Board {
 	//0 is O, 1 is X
 private:
 	bool whoPlayed[9] = { 0 };
@@ -70,6 +70,9 @@ public:
 		if (!isPlayed[place]) {
 			isPlayed[place] = true;
 			whoPlayed[place] = player;
+			return true;
 		}
+
+		return false;
 	}
 };
