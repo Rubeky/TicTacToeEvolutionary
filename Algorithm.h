@@ -6,11 +6,13 @@ class Algorithm
 {
 private:
 	float inputs[18] = { 0 };
-	Neuron hiddenNeurons[2][18];
-	Neuron outputs[9];
+	std::vector<Layer> layers;
+	float outputs[9] = { 0 };
 
 public:
 	Algorithm();
+	Algorithm(Algorithm* a);
+	void randomiseWeightings();
 	void setInputs(Board board);
 	void solveOutput();
 	int makeBestMove(int i);

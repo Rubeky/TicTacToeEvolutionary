@@ -1,6 +1,6 @@
 #include <iostream>
 #include "TicTacToe.h"
-#include "TicTacToeBoard.cpp"
+#include "Structs.cpp"
 
 
 int main() {

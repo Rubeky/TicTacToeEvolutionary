@@ -1,8 +1,20 @@
-#include "TicTacToeBoard.cpp"
+#include "Structs.cpp"
 #include "Algorithm.h"
 
 Algorithm::Algorithm()
 {
+	this->randomiseWeightings();
+	layers.push_back(Layer(18, 24));
+	layers.push_back(Layer(24, 9));
+}
+
+//Not implemented (should copy, and modify slightly, the input algorithm)
+Algorithm::Algorithm(Algorithm *a) {
+	
+}
+
+void Algorithm::randomiseWeightings() {
+
 }
 
 //Sets inputs for algorithm, given the board structure

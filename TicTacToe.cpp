@@ -1,6 +1,6 @@
 #include "TicTacToe.h"
 #include <vector>
-#include "TicTacToeBoard.cpp"
+#include "Structs.cpp"
 using namespace std;
 
 //Holds all neural networks, manipulates them as needed
