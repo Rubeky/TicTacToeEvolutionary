@@ -5,15 +5,24 @@
 class Algorithm
 {
 private:
-	float inputs[18] = { 0 };
+	//Input structure:
+	//0-8: isPlayed
+	//9-17: whoPlayed
+	std::vector<bool> inputs;
+
+	//Runs through algorithm
 	std::vector<Layer> layers;
-	float outputs[9] = { 0 };
+
+	//Which one to play
+	std::vector<float> outputs;
+
+	int outputOrder[9] = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
 public:
 	Algorithm();
 	Algorithm(Algorithm* a);
 	void randomiseWeightings();
-	void setInputs(Board board);
+	void setInputs(Board board, bool side);
 	void solveOutput();
 	int makeBestMove(int i);
 	bool playGame(Algorithm a, Board board);

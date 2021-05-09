@@ -76,6 +76,14 @@ public:
 
 		return false;
 	}
+
+	bool *getWhoPlayed() {
+		return whoPlayed;
+	}
+
+	bool *getIsPlayed() {
+		return isPlayed;
+	}
 };
 
 struct Layer {
@@ -93,7 +101,7 @@ public:
 		biases.resize(currentLayerSize);
 	}
 
-	std::vector<float> processLayer(std::vector<float> prevLayerOutputs) {
+	std::vector<float> processLayer(std::vector<float> prevLayerSize) {
 		float tempVar = 0;
 		std::vector<float> output;
 		//Iterate neurons
@@ -102,7 +110,7 @@ public:
 
 			//Iterate weightings for neuron
 			for (int j = 0; j < weights.at(i).size(); j++) {
-				tempVar += weights.at(i).at(j) * prevLayerOutputs.at(j);
+				tempVar += weights.at(i).at(j) * prevLayerSize.at(j);
 			}
 
 			//Adds bias
@@ -111,5 +119,9 @@ public:
 			//Ready for output!
 			output.push_back(tempVar);
 		}
+	}
+
+	void randomiseWeightings() {
+
 	}
 };
