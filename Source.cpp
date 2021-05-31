@@ -5,12 +5,10 @@
 
 int main() {
 	TicTacToe* ttt = new TicTacToe();
-	int best = 0;
 
 	//Iterate competitions until best algorithm wins
 	for (int i = 0; i < 1000; i++) {
-		best = ttt->competeAll();
-		ttt->updateBest(best);
+		ttt->competeAll();
 	}
 
 	ttt->saveAlgorithm();

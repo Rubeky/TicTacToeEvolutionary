@@ -1,5 +1,5 @@
 #pragma once
-#include "Neuron.h"
+#include "Structs.cpp"
 #include <vector>
 
 class Algorithm
@@ -21,6 +21,7 @@ private:
 public:
 	Algorithm();
 	Algorithm(Algorithm* a);
+	std::vector<Layer> getLayers();
 	void randomiseWeightings();
 	void setInputs(Board board, bool side);
 	void solveOutput();

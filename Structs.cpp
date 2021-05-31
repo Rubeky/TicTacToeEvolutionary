@@ -1,21 +1,21 @@
-#include <utility>
+#pragma once
 #include <vector>
 
 struct Board {
 	//0 is O, 1 is X
 private:
-	bool whoPlayed[9] = { 0 };
+	std::vector<bool> whoPlayed;
 
 	//1 is played
-	bool isPlayed[9] = { 0 };
+	std::vector<bool> isPlayed;
 
 public:
 	//Checks if game is won
 	//returns:
-	// 0 - No win is present
-	// 1 - noughts won
-	// 2 - crosses won
-	// 3 - tie
+	// 0 - noughts won
+	// 1 - crosses won
+	// 2 - tie
+	// 3 - no win yet
 	int isFinished() {
 		return std::max(isDiag(), isStraight(), isAllFilled());
 	}
@@ -24,14 +24,14 @@ public:
 	int isDiag() {
 		//Checking downward diagonal
 		if (isPlayed[0] && isPlayed[4] && isPlayed[8]) {
-			if (whoPlayed[0] && whoPlayed[4] && whoPlayed[8]) return 2;
-			if (!whoPlayed[0] && !whoPlayed[4] && !whoPlayed[8]) return 1;
+			if (whoPlayed[0] && whoPlayed[4] && whoPlayed[8]) return 1;
+			if (!whoPlayed[0] && !whoPlayed[4] && !whoPlayed[8]) return 0;
 		}
 
 		//Checking upward diagonal
 		if (isPlayed[2] && isPlayed[4] && isPlayed[6]) {
-			if (whoPlayed[2] && whoPlayed[4] && whoPlayed[6]) return 2;
-			if (!whoPlayed[2] && !whoPlayed[4] && !whoPlayed[6]) return 1;
+			if (whoPlayed[2] && whoPlayed[4] && whoPlayed[6]) return 1;
+			if (!whoPlayed[2] && !whoPlayed[4] && !whoPlayed[6]) return 0;
 		}
 
 		return 0;
@@ -39,17 +39,17 @@ public:
 
 	//Checking that a horizontal or vertical win is present
 	int isStraight() {
-		for (int i = 0; i < 3; i++) {
+		for (unsigned int i = 0; i < 3; i++) {
 			//Horizontal lines
-			if (isPlayed[0 + i*3] && isPlayed[1 + i*3] && isPlayed[2 + i*3]) {
-				if (whoPlayed[0 + i * 3] && whoPlayed[1 + i * 3] && whoPlayed[2 + i * 3]) return 2;
-				if (!whoPlayed[0 + i * 3] && !whoPlayed[1 + i * 3] && !whoPlayed[2 + i * 3]) return 1;
+			if (isPlayed[0 + i * 3] && isPlayed[1 + i * 3] && isPlayed[2 + i * 3]) {
+				if (whoPlayed[0 + i * 3] && whoPlayed[1 + i * 3] && whoPlayed[2 + i * 3]) return 1;
+				if (!whoPlayed[0 + i * 3] && !whoPlayed[1 + i * 3] && !whoPlayed[2 + i * 3]) return 0;
 			}
 
 			//Vertical lines
 			if (isPlayed[0 + i] && isPlayed[3 + i] && isPlayed[6 + i]) {
-				if (whoPlayed[0 + i] && whoPlayed[3 + i] && whoPlayed[6 + i]) return 2;
-				if (!whoPlayed[0 + i] && !whoPlayed[3 + i] && !whoPlayed[6 + i]) return 1;
+				if (whoPlayed[0 + i] && whoPlayed[3 + i] && whoPlayed[6 + i]) return 1;
+				if (!whoPlayed[0 + i] && !whoPlayed[3 + i] && !whoPlayed[6 + i]) return 0;
 			}
 		}
 	}
@@ -57,7 +57,7 @@ public:
 	//Checks if game is over due to a tie
 	int isAllFilled() {
 		int howManyFilled = 0;
-		for (int i = 0; i < 9; i++) {
+		for (unsigned int i = 0; i < 9; i++) {
 			if (isPlayed[i]) howManyFilled++;
 		}
 
@@ -77,11 +77,11 @@ public:
 		return false;
 	}
 
-	bool *getWhoPlayed() {
+	std::vector<bool> getWhoPlayed() {
 		return whoPlayed;
 	}
 
-	bool *getIsPlayed() {
+	std::vector<bool> getIsPlayed() {
 		return isPlayed;
 	}
 };
@@ -94,7 +94,7 @@ public:
 	//Allocates weights and biases to proper sizes
 	Layer(int prevLayerSize, int currentLayerSize) {
 		weights.resize(currentLayerSize);
-		for (int i = 0; i < weights.size(); i++) {
+		for (unsigned int i = 0; i < weights.size(); i++) {
 			weights.at(i).resize(prevLayerSize);
 		}
 
@@ -105,11 +105,11 @@ public:
 		float tempVar = 0;
 		std::vector<float> output;
 		//Iterate neurons
-		for (int i = 0; i < weights.size(); i++) {
+		for (unsigned int i = 0; i < weights.size(); i++) {
 			tempVar = 0;
 
 			//Iterate weightings for neuron
-			for (int j = 0; j < weights.at(i).size(); j++) {
+			for (unsigned int j = 0; j < weights.at(i).size(); j++) {
 				tempVar += weights.at(i).at(j) * prevLayerSize.at(j);
 			}
 
@@ -123,5 +123,13 @@ public:
 
 	void randomiseWeightings() {
 
+	}
+
+	std::vector<std::vector<float>> getWeights() {
+		return this->weights;
+	}
+
+	std::vector<float> getBiases() {
+		return this->biases;
 	}
 };

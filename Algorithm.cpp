@@ -16,28 +16,22 @@ Algorithm::Algorithm(Algorithm *a) {
 }
 
 void Algorithm::randomiseWeightings() {
-	for (int i = 0; i < layers.size(); i++) {
+	for (unsigned int i = 0; i < layers.size(); i++) {
 		layers.at(i).randomiseWeightings();
 	}
+}
+
+std::vector<Layer> Algorithm::getLayers() 
+{
+	return this->layers;
 }
 
 //Sets inputs for algorithm, given the board structure
 //side: if the player is the opposite side of the board
 void Algorithm::setInputs(Board board, bool side)
 {
-	bool* iterator = 0;
-
-	iterator = board.getIsPlayed();
-	for (int i = 0; i < 9; i++) {
-		inputs.push_back(iterator[i]);
-	}
-
-	iterator = board.getWhoPlayed();
-	for (int i = 0; i < 9; i++) {
-		//Switches who algorithm sees as played
-		if (side) iterator[i] = !iterator[i];
-		inputs.push_back(iterator[i]);
-	}
+	inputs.insert(std::end(inputs), std::begin(board.getIsPlayed()), std::end(board.getIsPlayed()));
+	inputs.insert(std::end(inputs), std::begin(board.getWhoPlayed()), std::end(board.getWhoPlayed()));
 }
 
 //Finds "best" outputs given current neural network
@@ -47,7 +41,7 @@ void Algorithm::solveOutput() {
 	float outputTemp;
 
 	//Full solving based on inputs
-	for (int i = 0; i < inputs.size(); i++) {
+	for (unsigned int i = 0; i < inputs.size(); i++) {
 		passThrough.push_back(float(inputs.at(i)));
 	}
 
@@ -55,8 +49,8 @@ void Algorithm::solveOutput() {
 	outputs = layers.at(1).processLayer(passThrough);
 
 	//Basic bubble sort, only needs to sort a 9 long list
-	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 8; j++) {
+	for (unsigned int i = 0; i < 9; i++) {
+		for (unsigned int j = 0; j < 8; j++) {
 			if (outputs.at(j) < outputs.at(j + 1)) {
 				//Swap
 				orderTemp = outputOrder[j];
@@ -88,7 +82,7 @@ bool Algorithm::playGame(Algorithm a, Board board)
 		//Run algorithm
 		this->solveOutput();
 		//Make best move that is playable, recommended by algorithm
-		for (int i = 0; !moveMade; i++) {
+		for (int i = 0; !moveMade && i < 9; i++) {
 			moveToMake = this->makeBestMove(i);
 			moveMade = board.makeMove(moveToMake, 0);
 		}
