@@ -14,7 +14,7 @@ private:
 	std::vector<Layer> layers;
 
 	//Which one to play
-	std::vector<float> outputs;
+	std::vector<double> outputs;
 
 	int outputOrder[9] = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 

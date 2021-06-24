@@ -21,7 +21,6 @@ void TicTacToe::competeAll()
 	int wIndices[numAlgorithms] = { 0 };
 	for (int i = 0; i < numAlgorithms; i++) wIndices[i] = i;
 	int whoWon = 0;
-	int returningWinners[5];
 
 	//Increments through all algorithms so they all fight
 	for (int i = 0; i < this->numAlgorithms; i++) {
@@ -46,7 +45,7 @@ void TicTacToe::competeAll()
 				switch (whoWon) {
 				case(0): wins[i]++; break;
 				case(1): wins[j]++; break;
-				default: wins[j]++; wins[i]++;
+				default: wins[j]++; wins[i]++; break;
 				}
 			} 
 		}
@@ -95,10 +94,10 @@ void TicTacToe::saveAlgorithm()
 	fout.open("savedAlgorithm.csv", ios::out | ios::app);
 
 	//Useful numbers to have
-	int numLayers = best->getLayers().size();
-	std::vector<int> numNeurons;
-	std::vector<std::vector<float>> weights;
-	std::vector<float> biases;
+	size_t numLayers = best->getLayers().size();
+	std::vector<size_t> numNeurons;
+	std::vector<std::vector<double>> weights;
+	std::vector<double> biases;
 	Layer* layer = new Layer(0, 0);
 
 	for (int i = 0; i < numLayers; i++) {

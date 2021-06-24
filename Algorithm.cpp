@@ -3,9 +3,9 @@
 
 Algorithm::Algorithm()
 {
-	this->randomiseWeightings();
 	layers.push_back(Layer(18, 24));
 	layers.push_back(Layer(24, 9));
+	this->randomiseWeightings();
 }
 
 //Not implemented (should copy, and modify slightly, the input algorithm)
@@ -30,13 +30,22 @@ std::vector<Layer> Algorithm::getLayers()
 //side: if the player is the opposite side of the board
 void Algorithm::setInputs(Board board, bool side)
 {
-	inputs.insert(std::end(inputs), std::begin(board.getIsPlayed()), std::end(board.getIsPlayed()));
-	inputs.insert(std::end(inputs), std::begin(board.getWhoPlayed()), std::end(board.getWhoPlayed()));
+	this->inputs = { 0 };
+	std::vector<bool> isPlayed = board.getIsPlayed();
+	std::vector<bool> whoPlayed = board.getWhoPlayed();
+
+	for (int i = 0; i < 9; i++) {
+		inputs.push_back(isPlayed[i]);
+	}
+
+	for (int i = 0; i < 9; i++) {
+		inputs.push_back(whoPlayed[i]);
+	}
 }
 
 //Finds "best" outputs given current neural network
 void Algorithm::solveOutput() {
-	std::vector<float> passThrough;
+	std::vector<double> passThrough;
 	int orderTemp;
 	float outputTemp;
 
@@ -69,13 +78,14 @@ int Algorithm::makeBestMove(int i) {
 	return outputOrder[i];
 }
 
+//Returns 1 if 'this' algorithm has won, and 0 if the other one did
 bool Algorithm::playGame(Algorithm a, Board board)
 {
 	bool gameFinished = false;
 	bool moveMade = false;
 	int moveToMake = 0;
 
-	while (!gameFinished) {
+	while (board.isFinished() == 3) {
 		moveMade = false;
 		//Gives algorithm what it needs
 		this->setInputs(board, 0);
@@ -91,9 +101,11 @@ bool Algorithm::playGame(Algorithm a, Board board)
 		moveMade = false;
 		a.setInputs(board, 1);
 		a.solveOutput();
-		for (int i = 0; !moveMade; i++) {
+		for (int i = 0; !moveMade && i < 9; i++) {
 			moveToMake = a.makeBestMove(i);
 			moveMade = board.makeMove(moveToMake, 1);
 		}
 	}
+
+	return board.isFinished();
 }
